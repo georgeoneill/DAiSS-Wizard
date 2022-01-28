@@ -30,3 +30,10 @@ S.reg           = 'minkatrunc';
 matlabbatch     = bf_wizard_features(S);
 spm_jobman('run',matlabbatch);
 ```
+## Usage
+
+Add this folder to your path after intialising spm. 
+
+## Tutorials and Documention
+
+*Coming Soon!*
