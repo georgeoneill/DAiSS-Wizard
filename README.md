@@ -22,7 +22,7 @@ to this
 
 ```matlab
 S               = [];
-S.BF            = files.BF;
+S.BF            = '/path/to/BF.mat';
 S.method        = 'cov';
 S.cov.foi       = [1 48];
 S.reg           = 'minkatrunc';
