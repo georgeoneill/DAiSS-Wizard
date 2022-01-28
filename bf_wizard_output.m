@@ -49,7 +49,7 @@ end
 try
     opts = feval(['bf_output_' S.method]);
 catch
-    error('not a valid inverse method!')
+    error('not a valid output method!')
 end
 
 output.plugin.(S.method) = struct();
