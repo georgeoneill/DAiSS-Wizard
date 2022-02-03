@@ -3,6 +3,25 @@ function [matlabbatch, data] = bf_wizard_data(S)
 % A handy command-line based batch filler with some defaults for DAiSS
 % data module, pick a few options, and it will default for unpopulated
 % fields
+% FORMAT [batch, data] = bf_wizard_data(S)
+%   S               - input structure
+% Optional fields of S:
+%   S.D             - SPM MEEG object               - Default: REQUIRED
+%   S.dir           - path to save DAiSS BF.mat     - Default: same as S.D
+%   S.val           - which D.inv to use            - Default: 1
+%   S.gradsource    - where to pool sensor information from 
+%                       (inv | sens)                
+%                                                   - Default: 'inv'
+%   S.space         - which space to do calculations in
+%                       (MNI-Aligned | Head | Native)
+%                                                   - Default: MNI-Aligned
+%   S.overwite      - Overwrite existing BF.mat     - Default: 0
+
+% Output:
+%  matlabbatch      - matlabbatch job for spm_jobman to run
+%  data             - simplified summary of options selected
+%__________________________________________________________________________
+% Copyright (C) 2022 Wellcome Centre for Human Neuroimaging
 
 if ~isfield(S,'batch'); matlabbatch = []; else; matlabbatch = S.batch;  end
 if ~isfield(S,'dir');   S.dir = [];                                     end
@@ -45,6 +64,9 @@ if isfield(data,'batch')
 end
 if ~iscell(data.dir)
     data.dir = {data.dir};
+end
+if isa(data.D,'meeg')
+    data.D = fullfile(data.D.path,data.D.fname);
 end
 if ~iscell(data.D)
     data.D = {data.D};
