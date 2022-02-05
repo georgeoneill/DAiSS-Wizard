@@ -21,7 +21,7 @@ S.dir = 'path/to/BF';
 ```
 
 #### D
-Path to SPM MEEG object (.mat file).
+Path to SPM MEEG object (.mat file) we need to pull our data from.
 
 ```matlab
 % matlabbatch
