@@ -36,4 +36,4 @@ Add this folder to your path after intialising spm.
 
 ## Tutorials and Documention
 
-*Coming Soon!*
+View documentation in [doc](doc/README.md).
