@@ -68,3 +68,39 @@ matlabbatch{1}.spm.tools.beamforming.data.gradsource = 'inv';
 % Input Type: str
 S.val = 'inv';
 ```
+
+#### space
+Specifies in which space we want want to operate in.
+
+Options: 
+ - 'MNI-Aligned' (RECOMMENDED) does everything in MNI space (good for group analyses)
+ - 'Native' uses the space of the anatomical image associated with the data (fine for individial images)
+ - 'Head' uses the coordinate system of the MEG/EEG system.
+
+
+```matlab
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.data.gradsource = 'inv';
+
+% DAiSS-Wizard
+% Default: 'MNI-Aligned'
+% Input Type: str
+S.space = 'MNI-Aligned';
+```
+
+#### overwrite
+Do we want to automatically overwrite a BF.mat file which exists in this path? Otherwise DAiSS will create a dialog box before performing an overwrite.
+
+```matlab
+% matlabbatch
+% Default: REQUIRED
+% Input Type: int or logical
+matlabbatch{1}.spm.tools.beamforming.data.gradsource = 0;
+
+% DAiSS-Wizard
+% Default: 0
+% Input Type: int or logical
+S.overwrite = 0;
+```
