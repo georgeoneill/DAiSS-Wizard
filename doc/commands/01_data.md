@@ -23,7 +23,6 @@ S.dir = 'path/to/BF';
 #### D
 Path to SPM MEEG object (.mat file).
 
-#### matlabbatch
 ```matlab
 % matlabbatch
 % Default: REQUIRED
@@ -34,4 +33,38 @@ matlabbatch{1}.spm.tools.beamforming.data.D = {'/path/to/spmmeeg.mat'};
 % Default: REQUIRED.
 % Input Type: str or cellstr or meeg (yes, really!);
 S.D = 'path/to/spmmeeg.mat;
+```
+
+#### val
+Which element of the MEEG object's inv structure to pull information from (this normally is can be left as 1, unless there is a good reason to use something higher than that).
+
+```matlab
+% matlabbatch
+% Default: REQUIRED
+% Input Type: int
+matlabbatch{1}.spm.tools.beamforming.data.val = 1;
+
+% DAiSS-Wizard
+% Default: 1
+% Input Type: int
+S.val = 1;
+```
+
+#### gradsource
+Specifies where from a MEEG object to pull the sensor information from.
+
+Options: 
+ - 'inv' (RECOMMENDED) uses the `D.inv{val}.forward` information
+ - 'sens' uses the `D.sensors` information
+
+```matlab
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.data.gradsource = 'inv';
+
+% DAiSS-Wizard
+% Default: 'inv'
+% Input Type: str
+S.val = 'inv';
 ```
