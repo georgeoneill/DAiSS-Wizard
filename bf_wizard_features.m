@@ -13,7 +13,7 @@ if ~isfield(S,'cross_terms');   S.cross_terms = 'megeeg';               end
 if ~isfield(S,'woi');           S.woi = [-Inf Inf];                     end
 if ~isfield(S,'method');        error('You need to specify a method!'); end
 if ~isfield(S,'reg');           S.reg = 'none';                         end
-if ~isfield(S,'boostrap');      S.bootstrap = false;                    end
+if ~isfield(S,'bootstrap');     S.bootstrap = false;                    end
 if ~isfield(S,'visualise');     S.visualise = true;                     end
 if ~isfield(S,S.method);        S.(S.method) = struct();                end
 if ~isfield(S,S.reg);           S.(S.reg) = struct();                   end
