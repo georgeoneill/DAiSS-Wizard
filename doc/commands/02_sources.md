@@ -12,7 +12,9 @@ The source module generates the source space used for forward/inverse calculatio
 
 #### List of available plugins (and their own commands)
 - grid
-  - testing a second indent!   
+  - resolution
+  - space
+  - constrain  
 - mesh
 
 ## Commands
