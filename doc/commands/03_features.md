@@ -194,7 +194,7 @@ A.K.A robust covariance. Performs the operation <img src="https://render.githubu
 matlabbatch{1}.spm.tools.beamforming.features.plugins.contcov = {}; 
 
 % DAiSS-Wizard
-% Default: true
+% Default: N/A
 % Input Type: N/A
 S.method = 'contcov';
 ```
