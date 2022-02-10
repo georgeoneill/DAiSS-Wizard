@@ -5,7 +5,7 @@
 There are currently 7 modules within DAiSS which can call many subfunctions. A command list for each module can be found below.
 
 - [Data](commands/01_data.md)
-- [Sources](commands/02_data.md)
+- [Sources](commands/02_sources.md)
 - Features
 - Inverse
 - Output
