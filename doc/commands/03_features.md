@@ -7,8 +7,8 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [whatconditions](#whatconditions)
 - [woi](#woi)
 - [modality](#modality)
-- fuse
-- cross_terms
+- [fuse](#fuse)
+- [cross_terms](#cross_terms)
 - bootstrap
 - visualise
 
@@ -101,9 +101,9 @@ S.modality = {'EEG'}; % for just EEG sensors
 Fuse sensors from different modalities together (assume scaling/pre-whitening has already been performed prior to DAiSS).
 
 Options:
-- no. Do not combine. *default for DAiSS-Wizard*
-- meg. Use this for Elekta/MEGIN systems where planar gradiometers and magnetometers are both being used.
-- all. Comvine all in the selected modalities together!
+- **no**.       Do not combine. *default for DAiSS-Wizard*
+- **meg**.      Use this for Elekta/MEGIN systems where planar gradiometers and magnetometers are both being used.
+- **all**.      Comvine all in the selected modalities together!
 
 ```matlab
 
@@ -117,4 +117,28 @@ matlabbatch{1}.spm.tools.beamforming.features.fuse = 'no'; % for concurrent MEG/
 % Default: 'no'
 % Input Type: str
 S.fuse = 'no'; % for just EEG sensors
+```
+
+#### cross_terms
+If fusing modalities, set the cross terms between modalities in the matrix to zero.
+
+
+
+Options:
+- **meegeeg**.      Set terms between MEG and EEG to zero. (Default in DAiSS-Wizard)
+- **all**.          Set only different kinds of MEG sensors to zero (might be useful for MEGIN/Elekta)
+- **no**.           Don't set cross-terms to zero
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.features.cross_terms = 'meegeeg'; 
+
+
+% DAiSS-Wizard
+% Default: 'megeeg'
+% Input Type: str
+S.cross_terms = 'megeeg'; % for just EEG sensors
 ```
