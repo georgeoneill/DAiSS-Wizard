@@ -15,11 +15,11 @@ The source module generates the source space used for forward/inverse calculatio
   - [resolution](#resolution)
   - [space](#space)
   - [constrain](#constrain)  
-- mesh
-  - orient
-  - fdownsample
-  - symmetric
-  - flip
+- [mesh](#mesh)
+  - [orient](#orient)
+  - [fdownsample](#fdownample)
+  - [symmetric](#symmetric)
+  - [flip](#flip)
 
 ## Commands
 
@@ -200,5 +200,58 @@ S.mesh.orient = 'unoriented';
 ```
 
 #### fdownsample
+Select the downsampling factor of the mesh to reduce the number of sources modelled (particulrly useful if the cortex mesh is a full resolution freesurfer reconstruction). a value of *n* would mean that every n<sup>th</sup> vertex is included in the source model.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.mesh.fdownsample = 1;
+
+% DAiSS-Wizard
+% Default: 1
+% Input Type: numeric
+S.method = 'mesh'; 
+S.mesh.fdownsample = 1;
+```
+
 #### symmetric
+Do you want the source space to be summetric in the mid-saggital plane? If so, which hemisphere do you want mirrored?
+
+Options:
+- no *(default)*. Do not mirror.
+- left. Mirror the left hemisphere.
+- right. Mirror the right hemisphere.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.mesh.symmetric = 'no';
+
+% DAiSS-Wizard
+% Default: 'no'
+% Input Type: str
+S.method = 'mesh'; 
+S.mesh.symmetric = 'no';
+```
+
 #### flip
+Do you want to flip the source space around the mid-saggital plane?
+
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical or str
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.mesh.flip = false;
+
+% DAiSS-Wizard
+% Default: false
+% Input Type: logical or str
+S.method = 'mesh'; 
+S.mesh.symmetric = false;
+```
