@@ -13,8 +13,8 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [visualise](#visualise)
 
 #### Plugins for matrix generation
-- contov
-- cov
+- [contcov](#contcov)
+- [cov](#cov)
 - cov_bysamples
 - csd
 - identity
@@ -183,8 +183,8 @@ S.visualise = true;
 ```
 
 ## Matrix generation plugins
-#### contcov
-A.K.A robust covariance. Performs the operation <img src="https://render.githubusercontent.com/render/math?math=C=\frac{1}{n}YY^T">. This function assumes the data has been filtered prior to this step. No extra flags to call as such but need to explicitly call the method.
+### contcov
+A.K.A robust covariance. Performs the operation <img src="https://render.githubusercontent.com/render/math?math=C=\frac{1}{n}YY^T">. This function assumes the data has been filtered prior to this step. No extra flags to call as such but need to explicitly call the method. Can work for epoched or continuous data.
 
 ```matlab
 
@@ -197,4 +197,42 @@ matlabbatch{1}.spm.tools.beamforming.features.plugins.contcov = {};
 % Default: N/A
 % Input Type: N/A
 S.method = 'contcov';
+```
+
+### cov
+Band-pass filtered covariance matrix. Data is filtered using a discrete cosine transform (DCT) prior to covarianc calculation. **Warning:** this method will only work on epoched data due to the <img src="https://render.githubusercontent.com/render/math?math=n_{samples} \times n_{samples}"> matrix required to do the filtering using a DCT.
+
+#### foi
+Which requency band(s) of interest do you want to filter in? <img src="https://render.githubusercontent.com/render/math?math=n_{bands} \times 2"> to specify multiple windows. 
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.cov.foi = [13 30]; % for the first second of each trial
+
+% DAiSS-Wizard
+% Default: [0 Inf]
+% Input Type: numeric
+S.method = 'cov'; % for the first second of each trial
+S.cov.foi = [13 30];
+```
+
+#### taper
+Apply a hanning window to minimise the effects of edge-of-epoch effects.
+Options:
+- **hanning**: Apply the hanning window
+- **none**: do nothing
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.features.features.plugin.cov.taper = 'hanning'; % for the first second of each trial
+
+% DAiSS-Wizard
+% Default: 'hanning'
+% Input Type: numeric
+S.method = 'cov'; % for the first second of each trial
+S.cov.taper = 'hanning';
 ```
