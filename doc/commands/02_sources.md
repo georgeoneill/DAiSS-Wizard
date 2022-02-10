@@ -105,3 +105,37 @@ S.visualise = true;
 ### grid
 
 This pugin facilitates seting up a regular volumetric grid within a spefied region of the brain. Good for spatial filter methods (such as beamformers) but can be used in other cases if you want.
+
+#### resolution
+Select the resolution of the grid (in mm)
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: 5
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.resolution = 5;
+
+% DAiSS-Wizard
+% Default: 5
+% Input Type: numeric
+S.method = 'grid'; 
+S.grid.resolution = 5;
+```
+
+#### space
+Select the space which the grid is contructed before moving to the invdividual.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: 5
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.resolution = 5;
+
+% DAiSS-Wizard
+% Default: 5
+% Input Type: numeric
+S.method = 'grid'; 
+S.grid.resolution = 5;
+```
