@@ -16,6 +16,10 @@ The source module generates the source space used for forward/inverse calculatio
   - [space](#space)
   - [constrain](#constrain)  
 - mesh
+  - orient
+  - fdownsample
+  - symmetric
+  - flip
 
 ## Commands
 
@@ -166,3 +170,7 @@ matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.constrain = 'iskull';
 S.method = 'grid'; 
 S.grid.constrain = 'iskull';
 ```
+
+### mesh
+
+Generates the source space to be on the vertices of a mesh representing the cortex (or totally bonkers and custom like [a dragon perahps](https://github.com/tierneytim/OPM#c5)) 
