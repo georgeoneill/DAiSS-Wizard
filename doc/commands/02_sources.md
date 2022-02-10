@@ -34,7 +34,7 @@ Path to BF.mat file
 matlabbatch{1}.spm.tools.beamforming.sources.BF = {'/path/to/BF/'};
 
 % DAiSS-Wizard
-% Default: if not provided, will default to the path where 'S.D' exists (see below).
+% Default: REQUIRED
 % Input Type: str or cellstr
 S.BF = 'path/to/BF';
 ```
