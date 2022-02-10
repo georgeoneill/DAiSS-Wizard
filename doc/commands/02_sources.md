@@ -173,4 +173,32 @@ S.grid.constrain = 'iskull';
 
 ### mesh
 
-Generates the source space to be on the vertices of a mesh representing the cortex (or totally bonkers and custom like [a dragon perahps](https://github.com/tierneytim/OPM#c5)) 
+Generates the source space to be on the vertices of a mesh representing the cortex (or totally bonkers and custom like [a dragon perahps](https://github.com/tierneytim/OPM#c5)). Similar to how MEEG source inversion in the core of SPM operates. Good for distributed soure soltions).
+
+#### orient
+
+Decide how to constrain the orientaiton of the sources at each mesh vertex. 
+
+Options:
+- unoriented _(Default)._ No contraint on orientation, allows for a full vector analysis or a data driven orientation optimisation later. 
+- original. Forces the orientation of the source to be normal to the mesh surface. 
+- downsample. Behaves similarly to 'original' (useful for downsampled source spaces. see fdownsample)
+
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.mesh.orient = 'unoriented';
+
+% DAiSS-Wizard
+% Default: 'unoriented'
+% Input Type: str
+S.method = 'mesh'; 
+S.mesh.orient = 'unoriented';
+```
+
+#### fdownsample
+#### symmetric
+#### flip
