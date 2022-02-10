@@ -2,8 +2,6 @@
 This module is responsible for for the preparation of a features matrix (normally a covariance) required as a part of an inverse model for source reconstruction.
 This also allows us to inspect the eigenspectrum of the matrix and regularise to allow for more stable solutions.
 
-<img src="https://render.githubusercontent.com/render/math?math=\P(A|B)=\frac{\P(B|A)\P(A)}{\P(B)}">
-
 #### Top-level commands
 - [BF](#BF)
 - [whatconditions](#whatconditions)
@@ -12,10 +10,19 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [fuse](#fuse)
 - [cross_terms](#cross_terms)
 - [bootstrap](#cross_terms)
-- visualise
+- [visualise](#visualise)
 
 #### Plugins for matrix generation
-#### Plugins for reguularisation
+- contov
+- cov
+- cov_bysamples
+- csd
+- identity
+- regmulticov
+- tdcov
+- vbfa
+
+#### Plugins for regularisation
 
 ## Commands
 #### BF
@@ -173,4 +180,21 @@ matlabbatch{1}.spm.tools.beamforming.features.visualise = true;
 % Default: true
 % Input Type: logical
 S.visualise = true;
+```
+
+## Matrix generation plugins
+#### contcov
+A.K.A robust covariance. Performs the operation <img src="https://render.githubusercontent.com/render/math?math=C=\frac{1}{n}YY^T">. This function assumes the data has been filtered prior to this step. No extra flags to call as such but need to explicitly call the method.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: N/A
+matlabbatch{1}.spm.tools.beamforming.features.plugins.contcov = {}; 
+
+% DAiSS-Wizard
+% Default: true
+% Input Type: N/A
+S.method = 'contcov';
 ```
