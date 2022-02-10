@@ -5,16 +5,16 @@ The source module generates the source space used for forward/inverse calculatio
 
 #### List of available top-level commands
 - [BF](#BF)
-- reduce_rank
-- keep3d
-- normalise_lf
-- visualise
+- [reduce_rank](#reduce_rank)
+- [keep3d](#keep3d)
+- [normalise_lf](#normalise_lf)
+- [visualise](#visualise)
 
 #### List of available plugins (and their own commands)
-- grid
-  - resolution
-  - space
-  - constrain  
+- [grid](#grid)
+  - [resolution](#resolution)
+  - [space](#space)
+  - [constrain](#constrain)  
 - mesh
 
 ## Commands
@@ -126,16 +126,43 @@ S.grid.resolution = 5;
 #### space
 Select the space which the grid is contructed before moving to the invdividual.
 
+Options
+- MNI template _(Default, recommended)._ Grid constucted in MNI space and then warped back into the space defined in the [data](01_data.md) module. 
+- MNI-Aligned
+- Head
+- Native
+
 ```matlab
 
 % matlabbatch
 % Default: REQUIRED
-% Input Type: 5
-matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.resolution = 5;
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.space = 'MNI template';
 
 % DAiSS-Wizard
-% Default: 5
-% Input Type: numeric
+% Default: 'MNI template'
+% Input Type: str
 S.method = 'grid'; 
-S.grid.resolution = 5;
+S.grid.template = 'MNI template';
+```
+
+#### constrain
+Select the boundary of which sources which exist outside of it (post-warp) are not included in source analysis.
+
+Options
+- iskull _(Default, recommended)._ Uses the inner skull compartment. 
+- scalp. Uses the scalp mesh.
+
+```matlab
+
+% matlabbatch
+% Default: 'iskull'
+% Input Type: str
+matlabbatch{1}.spm.tools.beamforming.sources.plugin.grid.constrain = 'iskull';
+
+% DAiSS-Wizard
+% Default: 'iskull'
+% Input Type: str
+S.method = 'grid'; 
+S.grid.constrain = 'iskull';
 ```
