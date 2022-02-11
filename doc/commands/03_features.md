@@ -15,8 +15,8 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 #### Plugins for matrix generation
 - [contcov](#contcov)
 - [cov](#cov)
-- cov_bysamples
-- csd
+- [cov_bysamples](#cov_bysamples)
+- [csd](#csd)
 - identity
 - regmulticov
 - tdcov
@@ -235,4 +235,110 @@ matlabbatch{1}.spm.tools.features.features.plugin.cov.taper = 'hanning'; % for t
 % Input Type: numeric
 S.method = 'cov'; % for the first second of each trial
 S.cov.taper = 'hanning';
+```
+
+### cov_bysamples
+Similar to the Robust Covariance ([contcov](#contcov)) module, but a binary mask is used to speficy which time windows are used. (Useful if you have states allocated from e.g. a HMM where the windows of activation are all different lengths). There are two ways to call this, either by using the **samples** command or by having a channel called 'Class' in your meeg object which can have multiple states encoded within in (assumes mutual exclusivity).
+
+#### samples
+A <img src="https://render.githubusercontent.com/render/math?math=1 \times n_{samples per trial} \times n_{trials}"> binary array to select which time windows.
+  
+##### Example calling from matlabbatch/wizard with an explicit variable.
+```matlab
+
+% matlabbatch
+% Default: N/A
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.cov_bysamples.samples = samples; % 1 x t x ntrials
+
+% DAiSS-Wizard
+% Default: N/A
+% Input Type: numeric
+S.method = 'cov_bysamples'; % for the first second of each trial
+S.cov_bysamples.samples = samples;
+```
+
+##### Example: using a channel called Class
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.cov_bysamples = {[]}; 
+
+% DAiSS-Wizard
+% Default: REQUIRED
+% Input Type: numeric
+S.method = 'cov_bysamples'; % for the first second of each trial
+```
+
+### csd
+Cross-spectral density matrix. Utilises 'ft_specest_mtmfft' to perform spectral analysis
+#### foi 
+Specify the frequency band of interest for the CSD
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric (1 x 2 array)
+matlabbatch{1}.spm.tools.features.features.plugin.csd.foi = [13 30]; 
+
+% DAiSS-Wizard
+% Default: REQUIRED
+% Input Type: numeric (1 x 2 array)
+S.method = 'csd'; % for the first second of each trial
+S.csd.foi = [13 30];
+```
+#### taper 
+Select which kind of taper to convolve with data during spectral analysis
+
+Options:
+- hanning
+- rectwin
+- dpss
+- sine
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.features.features.plugin.csd.taper = 'dpss'; 
+
+% DAiSS-Wizard
+% Default: 'dpss'
+% Input Type: str
+S.method = 'csd'; % for the first second of each trial
+S.csd.taper = 'dpss';
+```
+#### keepreal 
+Do we only want to keep the real part of the CSD, setting to false keeps the CSD complex.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.features.features.plugin.csd.keepreal = false; 
+
+% DAiSS-Wizard
+% Default: false
+% Input Type: logical
+S.method = 'csd'; % for the first second of each trial
+S.csd.keepreal = false;
+```
+
+#### han
+Hanning window trials to minimise edge effects
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.features.features.plugin.csd.keepreal = false; 
+
+% DAiSS-Wizard
+% Default: true
+% Input Type: logical
+S.method = 'csd'; % for the first second of each trial
+S.csd.han = true;
 ```
