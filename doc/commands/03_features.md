@@ -17,12 +17,19 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [cov](#cov)
 - [cov_bysamples](#cov_bysamples)
 - [csd](#csd)
-- identity
+- [identity](#identity)
 - regmulticov
-- tdcov
-- vbfa
+- [tdcov](#tdcov)
+- [vbfa](#vbfa)
 
 #### Plugins for regularisation
+
+- clifftrunc
+- mantrunc
+- manual (classic Tikhonov regrularisation)
+- minkatrunc
+- roi
+- tikhonov_rankdef
 
 ## Commands
 #### BF
@@ -341,4 +348,115 @@ matlabbatch{1}.spm.tools.features.features.plugin.csd.keepreal = false;
 % Input Type: logical
 S.method = 'csd'; % for the first second of each trial
 S.csd.han = true;
+```
+
+#### identity
+Returns an identity matrix. No options to call.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.features.features.plugin.identity = {[]};
+
+% DAiSS-Wizard
+% Default: true
+% Input Type: logical
+S.method = 'identity'; % for the first second of each trial
+```
+
+#### regmulticov
+
+A Woooly special. 
+
+#### tdcov
+
+Band-pass filtered covariance generation, with an additional temporal decomposition step. 
+Used for the source inversions which use the Fristonian version of Free Energy (eg. EBB). See [Lopez et al. (2014)](https://doi.org/10.1016/j.neuroimage.2013.09.002) for more information.
+
+#### foi
+Specify the frequency band of interest to filter data prior to covariance generation.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.tdcov.foi = [0 Inf];
+
+% DAiSS-Wizard
+% Default: [0 Inf]
+% Input Type: numeric
+S.method = 'tdcov'; % for the first second of each trial
+S.todcov.foi = [0 inf];
+```
+
+#### ntmodes
+Number of temporal modes to decompose each trial down to. Set to 0 for an automatic determination.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.tdcov.ntmodes = 4;
+
+% DAiSS-Wizard
+% Default: 4
+% Input Type: numeric
+S.method = 'tdcov'; % for the first second of each trial
+S.todcov.ntmodes = 4;
+```
+
+#### taper
+Apply a hanning window to minimise the effects of edge-of-epoch effects.
+Options:
+- **hanning**: Apply the hanning window
+- **none**: do nothing
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: str
+matlabbatch{1}.spm.tools.features.features.plugin.tdcov.taper = 'hanning'; 
+
+% DAiSS-Wizard
+% Default: 'hanning'
+% Input Type: str
+S.method = 'tdcov'; % for the first second of each trial
+S.tdcov.taper = 'hanning';
+```
+
+### vbfa
+Variational Bayes Factorial Analysis. Used in conjuction with the Champagne source inversion to estimate the noise covariance. See [Wipf et al. (2010)](https://doi.org/10.1016/j.neuroimage.2009.06.083) for more information.
+
+#### nl
+Factor dimensionality
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.vbfa.nl = 5;
+
+% DAiSS-Wizard
+% Default: 5
+% Input Type: numeric
+S.method = 'vbfa'; 
+S.vbfa.taper = 5;
+```
+
+#### nem
+Number of iterations of EM-optimisation to find factors.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.plugin.vbfa.nl = 50;
+
+% DAiSS-Wizard
+% Default: 5o
+% Input Type: numeric
+S.method = 'vbfa'; 
+S.vbfa.taper = 50;
 ```
