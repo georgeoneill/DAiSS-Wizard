@@ -13,6 +13,7 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [visualise](#visualise)
 
 #### Plugins for matrix generation
+
 - [contcov](#contcov)
 - [cov](#cov)
 - [cov_bysamples](#cov_bysamples)
@@ -24,7 +25,8 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 
 #### Plugins for regularisation
 
-- clifftrunc
+- [none](#none)
+- [clifftrunc](#clifftrunc)
 - mantrunc
 - manual (classic Tikhonov regrularisation)
 - minkatrunc
@@ -455,8 +457,73 @@ Number of iterations of EM-optimisation to find factors.
 matlabbatch{1}.spm.tools.features.features.plugin.vbfa.nl = 50;
 
 % DAiSS-Wizard
-% Default: 5o
+% Default: 50
 % Input Type: numeric
 S.method = 'vbfa'; 
 S.vbfa.taper = 50;
 ```
+
+## Regularisation plugins
+
+More often than not the features matrix has to be inverted. However there are various reasons where the matrix itself is rank deficient (i.e. there is less content in the matrix than its size implies). Inverting a rank deifcient matrix can lead to numerical errors which result in a poor source reconstuction. The methods below attempt to minimise the effect of this.
+
+### none
+
+Ignore everything I just said above, this does nothing! Note DAiSS doesn't explicity have a *no regularisation* function, but the wizard scripts do.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.regularisation.manual.lambda = 0;
+
+% DAiSS-Wizard
+% Default: 'none'
+% Input Type: str
+S.reg = 'none';
+```
+
+### clifftrunc
+
+Autmatically determines the number of principal components in a matrix to keep. 
+Searches for the first large jump between eigenvalues in log-space, where it appears the eigenvalues have dropped of a cliff. See [Westerner et al. (2022); Fig. 1](https://www.sciencedirect.com/science/article/pii/S1053811921010612?via%3Dihub#fig0001) for examples of where the rank is estimated. Works well for data where a rank-deficiency is expected due to a regression (e.g. SSS, tSSS, SSP, ICA etc.)
+
+#### zscore
+The jumps in eigenvalue differences are z-transformed prior to finding the first large jump. Set the critical z-score to stop search at. Set to a value less than 0 to find the greatest jump.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.regularisation.clifftrunc.zscore = -1;
+
+% DAiSS-Wizard
+% Default: -1
+% Input Type: numeric
+S.reg = 'clifftrunc';
+S.clifftrunc.zscore = -1;
+
+### mantrunc
+
+Manually select the number of principal components to keep. 
+
+#### pcadim
+Number of components to keep.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.regularisation.mantrunc.pcadim = 100;
+
+% DAiSS-Wizard
+% Default: 100
+% Input Type: numeric
+S.reg = 'mantrunc';
+S.mantrunc.pcadim = 100;
+```
+### manual
+The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix.
+
+#### lambda
+The fractional proportion of the average of the diagonale elements. ie.<img src="https://render.githubusercontent.com/render/math?math=\frac{\lambda}{n}\Sum{i=1}^{n}C_{ii}">
