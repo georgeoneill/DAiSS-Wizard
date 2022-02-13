@@ -526,4 +526,17 @@ S.mantrunc.pcadim = 100;
 The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case <img src="https://render.githubusercontent.com/render/math?math=C_r = C %2B \mu I"> where <img src="https://render.githubusercontent.com/render/math?math=\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
 
 #### lambda
-The fractional proportion of the average of the diagonal elements. ie.<img src="https://render.githubusercontent.com/render/math?math=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
+The fractional proportion of the average of the diagonal elements (see equation above).
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.features.features.regularisation.manual.lambda = 0.05;
+
+% DAiSS-Wizard
+% Default: 0
+% Input Type: numeric
+S.reg = 'manual';
+S.manual.lambda = 0.05; % 5% regularisation
+```
