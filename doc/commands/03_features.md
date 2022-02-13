@@ -27,8 +27,8 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 
 - [none](#none)
 - [clifftrunc](#clifftrunc)
-- mantrunc
-- manual (classic Tikhonov regrularisation)
+- [mantrunc](#mantrunc)
+- [manual](#manual) (classic Tikhonov regrularisation)
 - minkatrunc
 - roi
 - tikhonov_rankdef
@@ -523,7 +523,7 @@ S.reg = 'mantrunc';
 S.mantrunc.pcadim = 100;
 ```
 ### manual
-The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix.
+The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case <img src="https://render.githubusercontent.com/render/math?math=C_r = C %2B \mu I"> where <img src="https://render.githubusercontent.com/render/math?math=\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
 
 #### lambda
-The fractional proportion of the average of the diagonale elements. ie.<img src="https://render.githubusercontent.com/render/math?math=\frac{\lambda}{n}\Sum{i=1}^{n}C_{ii}">
+The fractional proportion of the average of the diagonal elements. ie.<img src="https://render.githubusercontent.com/render/math?math=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
