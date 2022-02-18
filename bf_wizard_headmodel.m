@@ -6,7 +6,7 @@ function [matlabbatch, headmodel] = bf_wizard_headmodel(S)
 
 if ~isfield(S,'batch'); matlabbatch = []; else; matlabbatch = S.batch;  end
 if ~isfield(S,'D');       error('I need a SPM MEEG object specified!'); end
-if ~isfield(S,'fiducial');   error('I need fiducials specified!');      end
+if ~isfield(S,'fiducials');   error('I need fiducials specified!');     end
 if ~isfield(S,'val');           S.val = 1;                              end
 if ~isfield(S,'commment');      S.comment = '';                         end
 if ~isfield(S,'mri');           S.mri = [];                             end
@@ -25,13 +25,24 @@ if ~isfield(S.forward,'meg');   S.forward.meg = 'Single Shell';         end
 headmodel = struct();
 switch class(S.D)
     case 'meeg'
-        tmp = fullfile(D.path,D.fname);
+        tmp = fullfile(S.D.path,S.D.fname);
         S.D = {tmp};
     case 'char'
         S.D = {S.D};
 end
+headmodel.D = S.D;
 headmodel.val = S.val;
 headmodel.comment = S.comment;
+
+if ischar(S.mri)
+    % check file extention
+    [~,~,ext] = spm_fileparts(S.mri);
+    if ~isempty(strfind('.hdr',ext))
+        warning('swtiching .hdr file format to .img!');
+        S.mri = spm_file(S.mri,'ext','.img');
+    end
+    S.mri = {[S.mri ',1']};
+end
 
 % Check if using template MRI, subject MRI and/or custom meshes
 % S.template being true overrides all other commands
@@ -66,7 +77,7 @@ for ii = 1:numel(S.fiducials)
     
    fid(ii).fidname = S.fiducials(ii).name;
    
-   if isnumerc(S.fiducials(ii).location)
+   if isnumeric(S.fiducials(ii).location)
        fid(ii).specification.type = S.fiducials(ii).location;
    elseif ischar(S.fiducials(ii).location)
        fid(ii).specification.select = S.fiducials(ii).location;
