@@ -29,7 +29,7 @@ This also allows us to inspect the eigenspectrum of the matrix and regularise to
 - [clifftrunc](#clifftrunc)
 - [mantrunc](#mantrunc)
 - [manual](#manual) (classic Tikhonov regrularisation)
-- minkatrunc
+- [minkatrunc](#minkatrunc)
 - roi
 - tikhonov_rankdef
 
@@ -539,4 +539,22 @@ matlabbatch{1}.spm.tools.features.features.regularisation.manual.lambda = 0.05;
 % Input Type: numeric
 S.reg = 'manual';
 S.manual.lambda = 0.05; % 5% regularisation
+```
+
+### minkatrunc
+Identifies the rank of the covariance matrix using Bayesian assumptions. See [Minka (2000)](https://proceedings.neurips.cc/paper/2000/file/7503cfacd12053d309b6bed5c89de212-Paper.pdf) for more details. Works well for SQUID-MEG data, but we've noticed that for OPM data which has undergone any methods which reduce the data's rank (such as [HFC](https://doi.org/10.1016/j.neuroimage.2021.118484)) it fails to correctly identify the rank. Use with caution.
+
+#### reduce
+Reduces the size of the matrix to match the rank of the data. i.e. A 200 x 200 features matrix with rank 50 will be reduced to size 50 x 50. (Recommended).
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.features.features.regularisation.minktatrunc.reduce = 1;
+
+% DAiSS-Wizard
+% Default: 1
+% Input Type: logical
+S.reg = 'minkatrunc';
 ```
