@@ -60,12 +60,17 @@ else
             if isempty(S.(targets{ii}))
                 S.(targets{ii}) = {''};
             else
-                if S.fsfix 
+                % surfaces from freesurfer can have an offest, this should
+                % make a new surfaces with the offset corrected.
+                if S.fsfix
+                    S.(targets{ii}) = fix_fs_offset(S.(targets{ii}),S.mri);
                 end
                 
-               S.(targets{ii}) = {S.(targets{ii})}; 
+                S.(targets{ii}) = {S.(targets{ii})};
             end
+            headmodel.meshing.meshes.custom.(targets{ii}) = S.(targets{ii});
         end
+        
     end
 end
 
@@ -75,16 +80,16 @@ headmodel.meshing.meshres = S.meshres;
 fid = [];
 for ii = 1:numel(S.fiducials)
     
-   fid(ii).fidname = S.fiducials(ii).name;
-   
-   if isnumeric(S.fiducials(ii).location)
-       fid(ii).specification.type = S.fiducials(ii).location;
-   elseif ischar(S.fiducials(ii).location)
-       fid(ii).specification.select = S.fiducials(ii).location;
-   else
-       error('not a valid fiducial location!')
-   end
-       
+    fid(ii).fidname = S.fiducials(ii).name;
+    
+    if isnumeric(S.fiducials(ii).location)
+        fid(ii).specification.type = S.fiducials(ii).location;
+    elseif ischar(S.fiducials(ii).location)
+        fid(ii).specification.select = S.fiducials(ii).location;
+    else
+        error('not a valid fiducial location!')
+    end
+    
 end
 headmodel.coregistration.coregspecify.fiducial = fid;
 headmodel.coregistration.coregspecify.useheadshape = S.useheadshape;
@@ -99,7 +104,19 @@ end
 
 function g_fixed = fix_fs_offset(g,mri)
 % Function to fix the offset of the freesurfer derived meshes for SPM.
-    
 
-    
+g_old = gifti(g);
+v = spm_vol(mri{1});
+
+% get the cRAS offset (equivalent to mri_info --cras [mri])
+vox = [(v.dim/2)+1 1];
+cras4 = v.mat*vox';
+cras = cras4(1:3)';
+
+g_new = g_old;
+g_new.vertices = g_new.vertices + cras;
+
+g_fixed = spm_file(g,'suffix','_fsfix');
+save(g_new,g_fixed);
+
 end
