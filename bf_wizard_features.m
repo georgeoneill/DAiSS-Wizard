@@ -87,7 +87,7 @@ else
         if ~isfield(S.(S.reg),tag)
             features.regularisation.(S.reg).(tag) = val{1};
         else
-            features.regularisation.(S.reg).(tag) = S.(S.method).(tag);
+            features.regularisation.(S.reg).(tag) = S.(S.reg).(tag);
         end
         
     end
