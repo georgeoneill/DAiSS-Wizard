@@ -208,6 +208,8 @@ matlabbatch{1}.spm.tools.beamforming.features.plugins.contcov = {};
 S.method = 'contcov';
 ```
 
+***
+
 ### cov
 Band-pass filtered covariance matrix. Data is filtered using a discrete cosine transform (DCT) prior to covarianc calculation. **Warning:** this method will only work on epoched data due to the <img src="https://render.githubusercontent.com/render/math?math=n_{samples} \times n_{samples}"> matrix required to do the filtering using a DCT.
 
@@ -246,6 +248,8 @@ S.method = 'cov'; % for the first second of each trial
 S.cov.taper = 'hanning';
 ```
 
+***
+
 ### cov_bysamples
 Similar to the Robust Covariance ([contcov](#contcov)) module, but a binary mask is used to speficy which time windows are used. (Useful if you have states allocated from e.g. a HMM where the windows of activation are all different lengths). There are two ways to call this, either by using the **samples** command or by having a channel called 'Class' in your meeg object which can have multiple states encoded within in (assumes mutual exclusivity).
 
@@ -280,6 +284,8 @@ matlabbatch{1}.spm.tools.features.features.plugin.cov_bysamples = {[]};
 % Input Type: numeric
 S.method = 'cov_bysamples'; % for the first second of each trial
 ```
+
+***
 
 ### csd
 Cross-spectral density matrix. Utilises 'ft_specest_mtmfft' to perform spectral analysis
@@ -352,7 +358,9 @@ S.method = 'csd'; % for the first second of each trial
 S.csd.han = true;
 ```
 
-#### identity
+***
+
+### identity
 Returns an identity matrix. No options to call.
 ```matlab
 
@@ -367,11 +375,13 @@ matlabbatch{1}.spm.tools.features.features.plugin.identity = {[]};
 S.method = 'identity'; % for the first second of each trial
 ```
 
-#### regmulticov
+***
 
-A Woooly special. 
+### regmulticov
 
-#### tdcov
+***
+
+### tdcov
 
 Band-pass filtered covariance generation, with an additional temporal decomposition step. 
 Used for the source inversions which use the Fristonian version of Free Energy (eg. EBB). See [Lopez et al. (2014)](https://doi.org/10.1016/j.neuroimage.2013.09.002) for more information.
@@ -428,6 +438,8 @@ S.method = 'tdcov'; % for the first second of each trial
 S.tdcov.taper = 'hanning';
 ```
 
+***
+
 ### vbfa
 Variational Bayes Factorial Analysis. Used in conjuction with the Champagne source inversion to estimate the noise covariance. See [Wipf et al. (2010)](https://doi.org/10.1016/j.neuroimage.2009.06.083) for more information.
 
@@ -483,6 +495,8 @@ matlabbatch{1}.spm.tools.features.features.regularisation.manual.lambda = 0;
 S.reg = 'none';
 ```
 
+***
+
 ### clifftrunc
 
 Autmatically determines the number of principal components in a matrix to keep. 
@@ -502,6 +516,9 @@ matlabbatch{1}.spm.tools.features.features.regularisation.clifftrunc.zscore = -1
 % Input Type: numeric
 S.reg = 'clifftrunc';
 S.clifftrunc.zscore = -1;
+```
+
+***
 
 ### mantrunc
 
@@ -522,6 +539,9 @@ matlabbatch{1}.spm.tools.features.features.regularisation.mantrunc.pcadim = 100;
 S.reg = 'mantrunc';
 S.mantrunc.pcadim = 100;
 ```
+
+***
+
 ### manual
 The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case <img src="https://render.githubusercontent.com/render/math?math=C_r = C %2B \mu I"> where <img src="https://render.githubusercontent.com/render/math?math=\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
 
@@ -540,6 +560,8 @@ matlabbatch{1}.spm.tools.features.features.regularisation.manual.lambda = 0.05;
 S.reg = 'manual';
 S.manual.lambda = 0.05; % 5% regularisation
 ```
+
+***
 
 ### minkatrunc
 Identifies the rank of the covariance matrix using Bayesian assumptions. See [Minka (2000)](https://proceedings.neurips.cc/paper/2000/file/7503cfacd12053d309b6bed5c89de212-Paper.pdf) for more details. Works well for SQUID-MEG data, but we've noticed that for OPM data which has undergone any methods which reduce the data's rank (such as [HFC](https://doi.org/10.1016/j.neuroimage.2021.118484)) it fails to correctly identify the rank. Use with caution.
