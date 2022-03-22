@@ -8,7 +8,7 @@ This module is responsible for generating the source reconstruction weights for 
 
 - [champagne](#champagne)
 - deflect
-- dics
+- [dics](#dics)
 - [ebb](#ebb)
 - [eloreta](#eloreta)
 - lcmv
@@ -102,9 +102,35 @@ S.method = 'champagne'
 S.champagne.nupd = 0;
 ```
 
+***
+
 ### deflect
 
+***
+
 ### dics
+
+Dynamic Imaging of Coherent Source (DICS; [Gross et al. (2001)](https://doi.org/10.1073/pnas.98.2.694)) is a spatial filtering method similar to LCMV beamforming, but uses a cross-spectral density matrix in its formulation rather than a covariance. **Note:** this should be paired with the [csd](03_features.md#csd) features method.
+
+#### fixedori
+
+Select whether you want the dipole orientation optimised to give maximal power. Inputs are either strings **yes** or **no**.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: string
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.dics.fixedori = 'yes';
+
+% DAiSS-Wizard
+% Default: 'yes'
+% Input Type: string
+S.method = 'dics'
+S.dics.fixedori = 'yes';
+```
+
+***
 
 ### ebb
 
@@ -303,6 +329,8 @@ matlabbatch{1}.spm.tools.beamforming.inverse.plugin.ebb.noise = '/path/to/noise/
 S.method = 'ebb'
 S.ebb.noise = '/path/to/noise/BF.mat';
 ```
+
+***
 
 ### eloreta
 eLORETA is a variant of minimum-norm, which boasts a zero-error dipole localisation. See [Pascual-Maqui et al. (2007)](http://arxiv.org/pdf/0710.3341) for more details.
