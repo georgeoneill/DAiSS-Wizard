@@ -8,7 +8,7 @@ There are currently 7 modules within DAiSS which can call many subfunctions. A c
 - [Sources](commands/02_sources.md)
 - [Features](commands/03_features.md)
 - [Inverse](commands/04_inverse.md)
-- Output
+- [Output](commands/05_output.md)
 - Write
 - View
 
