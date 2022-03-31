@@ -8,13 +8,13 @@ This module is responsible for generating the source reconstruction weights for 
 
 - [champagne](#champagne)
 - deflect
-- dics
+- [dics](#dics)
 - [ebb](#ebb)
 - [eloreta](#eloreta)
-- lcmv
+- [lcmv](#lcmv)
 - lcmv_multicov
-- minimumnorm
-- nutmeg
+- [minimumnorm](#minimumnorm)
+- [nutmeg](#nutmeg) (for dSPM, sLORETA etc.)
 
 ## Commands
 #### BF
@@ -102,9 +102,35 @@ S.method = 'champagne'
 S.champagne.nupd = 0;
 ```
 
+***
+
 ### deflect
 
+***
+
 ### dics
+
+Dynamic Imaging of Coherent Source (DICS; [Gross et al. (2001)](https://doi.org/10.1073/pnas.98.2.694)) is a spatial filtering method similar to LCMV beamforming, but uses a cross-spectral density matrix in its formulation rather than a covariance. **Note:** this should be paired with the [csd](03_features.md#csd) features method.
+
+#### fixedori
+
+Select whether you want the dipole orientation optimised to give maximal power. Inputs are either strings **yes** or **no**.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: string
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.dics.fixedori = 'yes';
+
+% DAiSS-Wizard
+% Default: 'yes'
+% Input Type: string
+S.method = 'dics'
+S.dics.fixedori = 'yes';
+```
+
+***
 
 ### ebb
 
@@ -304,6 +330,8 @@ S.method = 'ebb'
 S.ebb.noise = '/path/to/noise/BF.mat';
 ```
 
+***
+
 ### eloreta
 eLORETA is a variant of minimum-norm, which boasts a zero-error dipole localisation. See [Pascual-Maqui et al. (2007)](http://arxiv.org/pdf/0710.3341) for more details.
 
@@ -324,3 +352,106 @@ matlabbatch{1}.spm.tools.beamforming.inverse.plugin.ebb.regularisation = 0.05;
 S.method = 'eloreta'
 S.ebb.regularisation = 0.05;
 ```
+
+***
+
+### lcmv
+
+Linear Constrained Minimal Variance (LCMV) Beamforming is a spatial filtering method of source reconstruction. It can be quite useful as either a general purpose source reconsruction method, or in cases where you think your sensor-level SNR is not that high, due to being a fairly robust at rejecting non-neural interference. For more information please see either [Brookes et al (2008)](https://doi.org/10.1016/j.neuroimage.2007.09.050) or [Westner et al (2022)](https://doi.org/10.1016/j.neuroimage.2021.118789). 
+
+#### orient
+
+Select whether you want the dipole orientation optimised to give maximal power. Optimisation based on [Sekihara's eigenvalue decomposition method](https://doi.org/10.1109/TBME.2004.827926).
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.lcmv.orient = true;
+
+% DAiSS-Wizard
+% Default: true
+% Input Type: logical
+S.method = 'lcmv'
+S.lcmv.orient = true;
+```
+
+#### keeplf
+
+Do you want to keep the oriented lead fields if the orient option above was set to true. 
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.lcmv.orient = true;
+
+% DAiSS-Wizard
+% Default: false
+% Input Type: logical
+S.method = 'lcmv'
+S.lcmv.keeplf = false;
+```
+
+***
+
+### lcmv_multicov
+
+***
+
+### minimumnorm
+
+Minimum norm estimator based on the [DeFleCT](https://imaging.mrc-cbu.cam.ac.uk/meg/AnalyzingData/DeFleCT_SpatialFiltering_Tools) tools developed by Hauk and Stenroos. See [Hauk and Stenroos (2014)](https://doi.org/10.1002/hbm.22279) for more informaiton.
+
+#### snr
+
+The assumed ratio of variances of signal and noise, used for setting the regularisation parameter.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.minimumnorm.snr = 5;
+
+% DAiSS-Wizard
+% Default: 5
+% Input Type: numeric
+S.method = 'minimumnorm'
+S.minimumnorm.snr = 5;
+```
+
+#### trunc
+
+The number of (smallest) singular values of the covariance matrix that are set to zero before making the whitener. For example, if the data has been SSP-projected, it needs to be at least the number of components projected away. **Note:** This flag is useful if you have provided an [unregularised covariance](03_features.md#none) but know that its going to be rank deficient.
+
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: numeric
+matlabbatch{1}.spm.tools.beamforming.inverse.plugin.minimumnorm.trunc = 0;
+
+% DAiSS-Wizard
+% Default: 0
+% Input Type: numeric
+S.method = 'minimumnorm'
+S.minimumnorm.trunc = 0;
+```
+
+***
+
+### nutmeg
+
+A selection of weigted minumim norm solutions implemented in [NUTMEG](https://www.nitrc.org/plugins/mwiki/index.php/nutmeg:MainPage). 
+
+#### method
+
+Which flavour of weighted minimum norm do you want to use?
+
+Options:
+- **dSPM** based on [Dale et al (2000)](https://doi.org/10.1016/S0896-6273(00)81138-1)
+- **sLORETA** based on *paper tbc*
+- **swLORETA** based on [Palmero-Soler et al (2007)](https://doi.org/10.1088/0031-9155/52/7/002)
