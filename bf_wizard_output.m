@@ -5,6 +5,7 @@ function [matlabbatch, output] = bf_wizard_output(S)
 % fields
 %
 % Currently *definitely* supported output methods include:
+%   - image_dics
 %   - image_mv
 %   - image_power
 
@@ -58,6 +59,40 @@ output.plugin.(S.method) = struct();
 % need to be implemented for each specific routine
 switch S.method
     
+    case 'image_dics'
+        
+        % check if a reference field is present
+        if ~isfield(S.(S.method),'reference')
+            warning('no reference suggestion found, assuming power image');
+            S.(S.method).reference.power = 1;
+        else
+            if isfield(S.(S.method).reference,'refchan')
+                if ~isfield(S.(S.method).reference.refchan,'name')
+                    error('please enter the name of the refchan you want to use')
+                end
+                if ~isfield(S.(S.method).reference.refchan,'shuffle')
+                    S.(S.method).reference.refchan.shuffle = 0;
+                end
+            end
+        end
+        
+        % other boilerplate cases 
+        if ~isfield(S.(S.method),'whatconditions')
+            S.(S.method).whatconditions.all = 1;
+        end
+        
+         if ~isfield(S.(S.method),'foi')
+            error('plese specify a frequency band of interest!');
+        end
+        
+        if ~isfield(S.(S.method),'woi')
+            error('plese specify a frequency band of interest!');
+        end
+            
+        if ~isfield(S.(S.method),'contrast')
+            error('please specify a contrast!')
+        end
+           
     case 'image_mv'
         
         isdesign = struct();

@@ -29,10 +29,10 @@ try
     opts = feval(['bf_sources_' S.method]);
     % check its only either the mesh or grid method for now
     % TODO: test wizard support for phantom grid, mni coord or VOIs
-    target = {'mesh','grid'};
+    target = {'mesh','grid','scalp'};
     if ~ismember(S.method,target)
         error(['method ' S.method ' is yet to be supported through the '...
-            'wizard, please use another [mesh, grid]']);
+            'wizard, please use another [mesh, grid, scalp]']);
     end
 catch
     error('not a valid source space generation method!')
