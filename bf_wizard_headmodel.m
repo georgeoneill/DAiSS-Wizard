@@ -36,7 +36,9 @@ headmodel.comment = S.comment;
 
 if ischar(S.mri)
     % check file extention
+
     [~,~,ext] = spm_fileparts(S.mri);
+  
     if ~isempty(strfind('.hdr',ext))
         warning('swtiching .hdr file format to .img!');
         S.mri = spm_file(S.mri,'ext','.img');
