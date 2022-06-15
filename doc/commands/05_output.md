@@ -81,3 +81,5 @@ S.woi = [0 1000]; % for the first second of each trial
 
 ## Inverse plugins
 ### image_dics
+Dynamic Imaging of Coherent Source (DICS; [Gross et al. (2001)](https://doi.org/10.1073/pnas.98.2.694)) is used to measure the coherence between reference signal (such as an EMG) and the brain, or simply used to generate power images.
+
