@@ -4,7 +4,7 @@ function [matlabbatch, output] = bf_wizard_output(S)
 % output module, pick a few options, and it will default for unpopulated
 % fields
 %
-% Currently *definitely* supported output methods include:
+% Current *definitely* supported output methods include:
 %   - image_dics
 %   - image_mv
 %   - image_power

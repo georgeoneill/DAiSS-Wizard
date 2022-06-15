@@ -53,6 +53,8 @@ catch
     error('not a valid covariance generation method!')
 end
 
+
+
 features.plugin.(S.method) = struct();
 
 for ii = 1:numel(opts.val)
