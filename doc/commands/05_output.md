@@ -5,10 +5,10 @@ This module is responsible for generating source-level summary images, or export
 - [BF](#BF)
 
 #### Semi-universal inputs (DAiSS-wizard only!)
-- conditions
-- contrast
-- foi
-- woi
+- [conditions](#semi_conditions)
+- [contrast](#semi_contrast)
+- [foi](#semi_foi)
+- [woi](#semi_woi)
 
 #### Supported methods
 - image_dics
@@ -35,7 +35,7 @@ S.BF = 'path/to/BF';
 ## Semi-universal inputs (DAiSS-Wizard only)
 These inputs are not required by every output method, but it sometimes help that many of the common ones can be called simply.
 
-#### conditions
+#### conditions<a name="semi_conditions"></a>
 Specify which trials you'd like to be included when generating the output. Can be either all trials or a subset of conditions
 ##### Case: All Trials
 ```matlab
@@ -52,7 +52,7 @@ S.conditions = 'all';
 S.conditions = {'condtion_01','condition_02');
 ```
 
-#### contrast
+#### contrast<a name="semi_contrast"></a>
 Specify the contrast between conditions
 ```matlab
 % DAiSS-Wizard
@@ -61,7 +61,7 @@ Specify the contrast between conditions
 S.conditions = [1 -1]; % subtract second condition from first
 ```
 
-#### foi
+#### foi<a name="semi_foi"></a>
 Which requency band(s) of interest do you want to filter in? <img src="https://render.githubusercontent.com/render/math?math=n_{bands} \times 2"> to specify multiple windows. 
 ```matlab
 % DAiSS-Wizard
@@ -70,7 +70,7 @@ Which requency band(s) of interest do you want to filter in? <img src="https://r
 S.foi = [13 30];
 ```
 
-#### woi
+#### woi<a name="semi_woi"></a>
 Which window(s) of interest in each trial do you want to use? Can be an n x 2 matrix to specify multiple windows. Specify in milliseconds.
 ```matlab
 % DAiSS-Wizard
