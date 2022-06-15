@@ -10,8 +10,8 @@ This module is responsible for generating source-level summary images, or export
 - [foi](#semi_foi)
 - [woi](#semi_woi)
 
-#### Supported methods
-- image_dics
+#### Supported Output Plugins
+- [image_dics](#image_dics)
 - image_mv
 - image_power
 
@@ -78,3 +78,6 @@ Which window(s) of interest in each trial do you want to use? Can be an n x 2 ma
 % Input Type: numeric
 S.woi = [0 1000]; % for the first second of each trial
 ```
+
+## Inverse plugins
+### image_dics
