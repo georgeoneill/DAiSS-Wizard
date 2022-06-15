@@ -83,3 +83,61 @@ S.woi = [0 1000]; % for the first second of each trial
 ### image_dics
 Dynamic Imaging of Coherent Source (DICS; [Gross et al. (2001)](https://doi.org/10.1073/pnas.98.2.694)) is used to measure the coherence between reference signal (such as an EMG) and the brain, or simply used to generate power images.
 
+List of image_dics commands
+- reference
+- powmethod
+- whatconditions
+- sametrials
+- woi
+- contrast
+- logpower
+- foi
+- taper
+- result
+- scale
+- modality
+
+#### whatconditions
+Specify which trials you'd like to be included when generating the features matrix. Can be either all trials or a subset of conditions
+##### Case: All Trials
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.beamforming.output.plugin.image_dics.whatconditions.all = 1;
+
+% DAiSS-Wizard
+% Default: 'all'
+% Input Type: str or cellstr
+S.conditions = 'all';
+```
+##### Case: Specific conditions
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: cellstr
+matlabbatch{1}.spm.tools.beamforming.output.plugin.image_dics.whatconditions.conditions = {'condtion_01','condition_02');
+
+% DAiSS-Wizard
+% Default: 'all'
+% Input Type: cellstr
+S.conditions = {'condtion_01','condition_02');
+```
+
+#### sametrials
+Take the same trials as used for filter computation. This is useful for bootstraping.
+```matlab
+
+% matlabbatch
+% Default: REQUIRED
+% Input Type: logical
+matlabbatch{1}.spm.tools.beamforming.output.plugin.image_dics.sametrials = true;
+
+% matlabbatch
+% Default: false
+% Input Type: logical
+S.method = 'image_dics';
+S.image_dics.sametrials = true;
+```
