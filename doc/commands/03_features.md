@@ -193,7 +193,7 @@ S.visualise = true;
 
 ## Matrix generation plugins
 ### contcov
-A.K.A robust covariance. Performs the operation <img src="https://render.githubusercontent.com/render/math?math=C=\frac{1}{n}YY^T">. This function assumes the data has been filtered prior to this step. No extra flags to call as such but need to explicitly call the method. Can work for epoched or continuous data.
+A.K.A robust covariance. Performs the operation $C=\frac{1}{n}YY^T$. This function assumes the data has been filtered prior to this step. No extra flags to call as such but need to explicitly call the method. Can work for epoched or continuous data.
 
 ```matlab
 
@@ -211,10 +211,10 @@ S.method = 'contcov';
 ***
 
 ### cov
-Band-pass filtered covariance matrix. Data is filtered using a discrete cosine transform (DCT) prior to covarianc calculation. **Warning:** this method will only work on epoched data due to the <img src="https://render.githubusercontent.com/render/math?math=n_{samples} \times n_{samples}"> matrix required to do the filtering using a DCT.
+Band-pass filtered covariance matrix. Data is filtered using a discrete cosine transform (DCT) prior to covarianc calculation. **Warning:** this method will only work on epoched data due to the $n_{samples} \times n_{samples}$ matrix required to do the filtering using a DCT.
 
 #### foi
-Which requency band(s) of interest do you want to filter in? <img src="https://render.githubusercontent.com/render/math?math=n_{bands} \times 2"> to specify multiple windows. 
+Which requency band(s) of interest do you want to filter in? $n_{bands} \times 2$ to specify multiple windows. 
 ```matlab
 
 % matlabbatch
@@ -254,7 +254,7 @@ S.cov.taper = 'hanning';
 Similar to the Robust Covariance ([contcov](#contcov)) module, but a binary mask is used to speficy which time windows are used. (Useful if you have states allocated from e.g. a HMM where the windows of activation are all different lengths). There are two ways to call this, either by using the **samples** command or by having a channel called 'Class' in your meeg object which can have multiple states encoded within in (assumes mutual exclusivity).
 
 #### samples
-A <img src="https://render.githubusercontent.com/render/math?math=1 \times n_{samples per trial} \times n_{trials}"> binary array to select which time windows.
+A $1 \times n_{samples per trial} \times n_{trials}$ binary array to select which time windows.
   
 ##### Example calling from matlabbatch/wizard with an explicit variable.
 ```matlab
@@ -543,7 +543,7 @@ S.mantrunc.pcadim = 100;
 ***
 
 ### manual
-The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case <img src="https://render.githubusercontent.com/render/math?math=C_r = C %2B \mu I"> where <img src="https://render.githubusercontent.com/render/math?math=\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}">
+The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case $C_r = C %2B \mu I$ where $\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}$
 
 #### lambda
 The fractional proportion of the average of the diagonal elements (see equation above).
