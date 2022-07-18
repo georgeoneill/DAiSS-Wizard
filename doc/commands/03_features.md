@@ -543,7 +543,7 @@ S.mantrunc.pcadim = 100;
 ***
 
 ### manual
-The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case $C_r = C %2B \mu I$ where $\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}$
+The classic Tikhonov regularisation, where a an identity matrix is added to the matrix to reduce the condition of the matrix. In this case $C_r = C + \mu I$ where $$\mu=\frac{\lambda}{n}\sum_{i=1}^{n}C_{ii}$$
 
 #### lambda
 The fractional proportion of the average of the diagonal elements (see equation above).
