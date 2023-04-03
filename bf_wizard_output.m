@@ -142,7 +142,7 @@ switch S.method
         end
         
         if ~isfield(S.(S.method),'woi')
-            error('plese specify a frequency band of interest!');
+            error('plese specify a time window of interest!');
         end
             
         if ~isfield(S.(S.method),'contrast')
